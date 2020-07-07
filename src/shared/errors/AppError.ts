@@ -1,5 +1,3 @@
-
-
 class Error {
   public message: string;
 
