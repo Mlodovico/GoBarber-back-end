@@ -15,7 +15,7 @@ interface IRequestDTO {
 @injectable()
 class UpdateUserAvatarService {
   constructor(
-    @inject('UsersRepository')
+    @inject("UsersRepository")
     private usersRepository: IUsersRepository,
   ) {}
 

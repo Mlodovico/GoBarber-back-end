@@ -20,7 +20,7 @@ interface InewSession {
 @injectable()
 class AuthenticateUserService {
   constructor(
-    @inject('UsersRepository')
+    @inject("UsersRepository")
     private usersRepository: IUsersRepository,
   ) {}
 

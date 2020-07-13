@@ -14,7 +14,7 @@ interface IRequestDTO {
 @injectable()
 class CreateAppointmentService {
   constructor(
-    @inject('AppointmentsRepository')
+    @inject("AppointmentsRepository")
     private appointmentsRepository: IAppointmentRepository,
   ) {}
 
