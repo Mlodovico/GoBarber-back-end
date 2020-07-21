@@ -1,9 +1,8 @@
-import { getRepository, Repository } from 'typeorm';
-
 import IUserRepository from '@modules/users/repositories/IUsersRepositories';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
 import User from '../../infra/typeorm/entities/User';
+import { uuid } from 'uuidv4';
 
 class UsersRepository implements IUserRepository {
   private users: User[] = [];
@@ -21,13 +20,22 @@ class UsersRepository implements IUserRepository {
     return userEmail;
   };
 
-  public async create({ name, email, password }: ICreateUserDTO):
-  Promise<User> {
+  public async create(userData: ICreateUserDTO): Promise<User> {
+    const user = new User();
 
-    return newUser;
+    Object.assign(user, { id: uuid() }, userData)
+
+    this.users.push(user);
+
+    return user;
   };
 
   public async save(user: User): Promise<User> {
+    const findByIndex = this.users.findIndex(findUser => findUser.id === user.id);
+
+    this.users[findByIndex] = user;
+
+    return user;
   }
 }
 
