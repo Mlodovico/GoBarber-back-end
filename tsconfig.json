@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
@@ -11,7 +10,7 @@
     "paths": {
       "@modules/*": ["modules/*"],
       "@shared/*": ["shared/*"],
-      "@config/*": ["config/*"],
+      "@config/*": ["config/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
