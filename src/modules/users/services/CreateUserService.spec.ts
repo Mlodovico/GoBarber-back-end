@@ -3,7 +3,6 @@ import AppError from '@shared/errors/AppError';
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from './CreateUserService';
-import AuthenticateUserService from './AuthenticateUserService';
 
 describe('CreateUser', () => {
   it('should be able to create a new user', async () => {

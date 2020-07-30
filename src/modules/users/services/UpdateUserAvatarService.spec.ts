@@ -51,16 +51,16 @@ describe('UpdateUserAvatar', () => {
     //FUNCTIONATILLITY SPYON GETS THE STATUS OF THE METHOD
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile')
 
-    const user = await fakeUserRepository.create({
-      name: 'John Doe',
-      email: 'jdoe@hotmail.com',
-      password: '123456'
-    })
-
     const updateUserAvatar = new UpdateUserAvatarService(
       fakeUserRepository,
       fakeStorageProvider
     );
+
+    const user = await fakeUserRepository.create({
+      name: 'John Doe',
+      email: 'jdoe@hotmail.com',
+      password: '123456'
+    });
 
     await updateUserAvatar.execute({
       user_id: user.id,
