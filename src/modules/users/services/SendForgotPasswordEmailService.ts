@@ -4,8 +4,8 @@ import User from '../infra/typeorm/entities/User';
 
 import AppError from '@shared/errors/AppError';
 
-import IUsersRepository from '../repositories/IUsersRepository';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 
 interface IRequestDTO {
@@ -22,20 +22,22 @@ class SendForgotPasswordEmailService {
     private mailProvider: IMailProvider,
 
     @inject('UserTokensRepository')
-    private userTokenRepository: IUserTokensRepository
+    private userTokensRepository: IUserTokensRepository
   ) {}
 
   public async execute({ email }: IRequestDTO): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
-
     if(!user) {
       throw new AppError('User does not exist');
     }
 
-    await this.userTokenRepository.generate(user?.id)
+    await this.userTokensRepository.generate(user.id);
 
-    this.mailProvider.sendMail(email, 'Recuperação de senha recebido')
+    this.mailProvider.sendMail(
+      email,
+      'Recuperação de senha recebido.'
+    );
   }
 }
 
