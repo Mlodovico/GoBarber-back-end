@@ -22,7 +22,7 @@ class SendForgotPasswordEmailService {
     private mailProvider: IMailProvider,
 
     @inject('UserTokensRepository')
-    private userTokensRepository: IUserTokensRepository
+    private userTokensRepository: IUserTokensRepository,
   ) {}
 
   public async execute({ email }: IRequestDTO): Promise<void> {
@@ -32,12 +32,22 @@ class SendForgotPasswordEmailService {
       throw new AppError('User does not exist');
     }
 
-    await this.userTokensRepository.generate(user.id);
+    const { token } = await this.userTokensRepository.generate(user.id);
 
-    this.mailProvider.sendMail(
-      email,
-      'Recuperação de senha recebido.'
-    );
+    this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[GoBarber] Recuperação de senha',
+      template: {
+        template: 'Olá, {{name}}, seu token é {{token}}',
+        variables: {
+          name: user.name,
+          token,
+        }
+      }
+    });
   }
 }
 
