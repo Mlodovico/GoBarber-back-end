@@ -7,7 +7,7 @@ import {
   Generated
  } from 'typeorm';
 
-@Entity('users_tokens')
+@Entity('user_tokens')
 class UserToken {
 @PrimaryGeneratedColumn('uuid')
 id: string;
@@ -18,15 +18,6 @@ token: string;
 
 @Column()
 user_id: string;
-
-@Column()
-email: string;
-
-@Column()
-password: string;
-
-@Column()
-avatar: string;
 
 @CreateDateColumn()
 created_at: Date;
