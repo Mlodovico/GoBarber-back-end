@@ -5,21 +5,27 @@ import UpdateUserAvatarService from './UpdateUserAvatarService';
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 
-describe('UpdateUserAvatar', () => {
-  it('should be able to update avatar', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider;
+let fakeUserRepository: FakeUserRepository;
+let fakeStorageProvider: FakeStorageProvider;
+let updateUserAvatar: UpdateUserAvatarService;
 
+describe('UpdateUserAvatar', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeStorageProvider = new FakeStorageProvider;
+    updateUserAvatar = new UpdateUserAvatarService(
+      fakeUserRepository,
+      fakeStorageProvider
+    );
+
+  });
+
+  it('should be able to update avatar', async () => {
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'jdoe@hotmail.com',
       password: '123456'
-    })
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider
-    );
+    });
 
     await updateUserAvatar.execute({
       user_id: user.id,
@@ -30,14 +36,6 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should not be able to update avatar from non existing user', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider;
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider
-    );
-
     expect(await updateUserAvatar.execute({
       user_id: 'non-existing-user',
       avatarFilename: 'avatar.jpg'
@@ -45,9 +43,6 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should delete old avatar when updating new one', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider;
-
     //FUNCTIONATILLITY SPYON GETS THE STATUS OF THE METHOD
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile')
 
