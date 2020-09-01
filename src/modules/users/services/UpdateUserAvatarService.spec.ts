@@ -1,9 +1,10 @@
 import AppError from '@shared/errors/AppError';
 
-import UpdateUserAvatarService from './UpdateUserAvatarService';
 
 import FakeUserRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
+
+import UpdateUserAvatarService from './UpdateUserAvatarService';
 
 let fakeUserRepository: FakeUserRepository;
 let fakeStorageProvider: FakeStorageProvider;
@@ -36,7 +37,7 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should not be able to update avatar from non existing user', async () => {
-    expect(await updateUserAvatar.execute({
+    await expect(updateUserAvatar.execute({
       user_id: 'non-existing-user',
       avatarFilename: 'avatar.jpg'
     })).rejects.toBeInstanceOf(AppError);
