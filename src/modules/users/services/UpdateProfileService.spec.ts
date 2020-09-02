@@ -33,8 +33,16 @@ describe('UpdateProfile', () => {
       email: 'jdoe@hotmail.com',
     });
 
-    expect(updatedUser.name).toBe('Jane Doe');
-    expect(updatedUser.email).toBe('jdoe@hotmail.com');
+    await expect(updatedUser.name).toBe('Jane Doe');
+    await expect(updatedUser.email).toBe('jdoe@hotmail.com');
+  });
+
+  it('should not be able to update the profile from non-existing user', async () => {
+    await expect(updateProfile.execute({
+      user_id: 'non-existing-user',
+      name: 'John Doe',
+      email: 'jdoe@hotmail.com',
+    })).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to change to another user email', async () => {

@@ -6,7 +6,7 @@ import uploadConfig from '@config/upload';
 import UsersController from '../controllers/UsersControllers';
 import UsersAvatarController from '../controllers/UserAvatarController';
 
-import ensureAuthenticated from '@shared/infra/http/middleware/ensureAuthenticated';
+import ensureAuthenticated from '@modules/users/infra/http/middleware/ensureAuthenticated';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
