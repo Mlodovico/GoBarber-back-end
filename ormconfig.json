@@ -17,12 +17,10 @@
     }
   },
   {
-    "name": "mongo",
+    "name": "mongodb",
     "type": "mongodb",
     "host": "localhost",
     "port": 27017,
-    "username": "gobarber",
-    "password": "docker",
     "database": "gostack_gobarber",
     "useUnifiedTopology": true,
     "entities": [
